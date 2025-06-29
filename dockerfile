@@ -19,3 +19,4 @@ EXPOSE 3333
 
 # Commande de démarrage
 CMD ["node", "build/bin/server.js"]
+
