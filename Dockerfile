@@ -5,8 +5,8 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer les dépendances
-RUN npm ci --only=production
+# Installer TOUTES les dépendances (dev incluses pour le build)
+RUN npm ci
 
 # Copier le code source
 COPY . .
@@ -14,9 +14,12 @@ COPY . .
 # Build l'application
 RUN node ace build
 
+# Se déplacer dans le dossier build et installer seulement les dépendances de production
+WORKDIR /app/build
+RUN npm ci --omit="dev"
+
 # Exposer le port
 EXPOSE 3333
 
 # Commande de démarrage
-CMD ["node", "build/bin/server.js"]
-
+CMD ["node", "bin/server.js"]
