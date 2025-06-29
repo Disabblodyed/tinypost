@@ -27,8 +27,11 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app
-EXPOSE 3333
-CMD ["node", "./bin/server.js"]
+
+RUN apk add --no-cache curl
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD curl -f http://localhost:3333/health || exit 1
+
+EXPOSE 3333
+CMD ["node", "./bin/server.js"]
