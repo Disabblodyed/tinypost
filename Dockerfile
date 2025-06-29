@@ -28,7 +28,6 @@ ENV TZ=UTC
 
 COPY --from=production-deps /app/node_modules ./node_modules
 COPY --from=build /app/build ./
-COPY .env.production .env
 
 EXPOSE 3333
 CMD ["node", "./bin/server.js"]
