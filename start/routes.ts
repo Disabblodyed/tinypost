@@ -15,6 +15,7 @@ router.get('/', async () => {
   }
 })
 
-router.get('/health', async () => {
-  return { message: 'OK' }
+router.get('/health', async ({ response }) => {
+  return response.status(200).json({ status: 'healthy' })
 })
+

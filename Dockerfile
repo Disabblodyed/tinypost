@@ -1,5 +1,7 @@
 FROM node:22.16.0-alpine3.22 AS base
 
+RUN apk add --no-cache curl
+
 # All deps stage
 FROM base AS deps
 WORKDIR /app
@@ -28,3 +30,5 @@ COPY --from=build /app/build /app
 EXPOSE 3333
 CMD ["node", "./bin/server.js"]
 
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD curl -f http://localhost:3333/health || exit 1
